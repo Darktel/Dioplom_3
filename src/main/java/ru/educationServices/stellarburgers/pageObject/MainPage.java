@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -34,6 +35,14 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = "//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa']")
     private WebElement buttonRegistration;
 
+    @FindBy(how = How.XPATH, using = "//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_large__G21Vg']")
+    private WebElement buttonSignUpMiddle;
+
+    @FindBy(how = How.XPATH, using = "//h1[@class='text text_type_main-large mb-5 mt-10']")
+    public WebElement headerPage;
+
+    @FindBy(how = How.XPATH, using = "//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_large__G21Vg']")
+    public WebElement buttonSendOrder;
 
 //    @FindBy(how = How.XPATH, using = "")
 
@@ -54,5 +63,9 @@ public class MainPage {
         buttonProfileLink.click();
     }
 
+    public void clickLoginButton(){
+        wait.until(ExpectedConditions.visibilityOf(buttonSignUpMiddle));
+        buttonSignUpMiddle.click();
+    }
 
 }

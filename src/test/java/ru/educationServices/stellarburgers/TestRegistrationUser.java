@@ -1,10 +1,6 @@
 package ru.educationServices.stellarburgers;
 
-//Регистрация
-//Проверь:
-//Успешную регистрацию.
-//Ошибку для некорректного пароля. Минимальный пароль — шесть символов.
-
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -24,7 +20,7 @@ public class TestRegistrationUser {
 
     @Test
     @DisplayName("Регистрация нового пользователя")
-    public void testRegistrationClient(){
+    public void TestRegistrationClient(){
         WebDriver driver = driverExtension.getDriver();
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = new LoginPage(driver);
@@ -33,8 +29,28 @@ public class TestRegistrationUser {
         mainPage.clickProfileButton();
         loginPage.ClikRegistrationLink();
         registrationPage.RegistrationClient(driverExtension.client);
-
-
+        //Проверка редиректа на страницу логина, после регистрации.
+        loginPage.assertRedirectLoginPage();
+        // проверка через api что пользователь появился в системе
+        Response response = driverExtension.apiClient.loginClient(driverExtension.client);
+        driverExtension.checkClient.checkSuccessLoginUser(response, driverExtension.client);
     }
 
+    @Test
+    @DisplayName("Регистрация клиент с паролем менее 6 символов")
+    public void TestRegistrationClientWrongPassword(){
+        WebDriver driver = driverExtension.getDriver();
+        MainPage mainPage = new MainPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        RegistrationPage registrationPage = new RegistrationPage(driver);
+        driver.get(mainPage.URL);
+        mainPage.clickLoginButton();
+        loginPage.ClikRegistrationLink();
+        registrationPage.RegistrationClient(driverExtension.brokenClient);
+        //Проверка появления сообщения с ошибкой "Неверный пароль".
+        registrationPage.AssertDisplayMessage();
+        // проверка через api что пользователь не появился в системе
+        Response response = driverExtension.apiClient.loginClient(driverExtension.brokenClient);
+        driverExtension.checkClient.checkErrorLoginClient(response);
+    }
 }
