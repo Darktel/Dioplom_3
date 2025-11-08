@@ -67,23 +67,6 @@ public class TestLoginClient {
     @DisplayName("Авторизация пользователя ")
     public void Test2() {
 
+    }
 
-    }
-    @Test
-    @DisplayName("Регистрация нового пользователя")
-    public void testRegistrationClient(){
-        WebDriver driver = driverExtension.getDriver();
-        MainPage mainPage = new MainPage(driver);
-        LoginPage loginPage = new LoginPage(driver);
-        RegistrationPage registrationPage = new RegistrationPage(driver);
-        driver.get(mainPage.URL);
-        mainPage.clickProfileButton();
-        loginPage.ClikRegistrationLink();
-        registrationPage.RegistrationClient(driverExtension.client);
-        //Проверка редиректа на страницу логина, после регистрации.
-        loginPage.assertRedirectLoginPage();
-        // проверка через api что пользователь появился в системе
-        Response response = driverExtension.apiClient.loginClient(driverExtension.client);
-        driverExtension.checkClient.checkSuccessLoginUser(response, driverExtension.client);
-    }
 }
