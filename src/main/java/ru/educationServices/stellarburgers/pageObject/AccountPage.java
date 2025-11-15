@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -40,6 +41,9 @@ public class AccountPage {
     @FindBy(how = How.XPATH, using = "//button[contains(text(),'Выход')]")
     private WebElement buttonLogout;
 
+    @FindBy(how = How.XPATH, using = "//div[@class='AppHeader_header__logo__2D0X2']//a")
+    private WebElement logo;
+
 
     public AccountPage(WebDriver driver) {
         this.driver = driver;
@@ -52,5 +56,16 @@ public class AccountPage {
         Assertions.assertEquals(client.getName(), fieldName.getAttribute("Value"));
         Assertions.assertEquals(client.getEmail(), fieldEmail.getAttribute("Value"));
         wait.until(ExpectedConditions.visibilityOf(fieldPassword));
+    }
+
+    public void ckickButtonExit() {
+        wait.until(ExpectedConditions.elementToBeClickable(buttonLogout));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", buttonLogout);
+    }
+
+    public void clickLogo() {
+        wait.until(ExpectedConditions.visibilityOf(profileBar)); //Проверяем что мы дождались перехода на страницу Профиля
+        wait.until(ExpectedConditions.elementToBeClickable(logo));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logo);
     }
 }

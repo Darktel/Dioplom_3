@@ -1,8 +1,9 @@
 package ru.educationServices.stellarburgers.pageObject;
 
 import models.Client;
+import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -23,8 +24,6 @@ public class LoginPage {
     @FindBy(how = How.XPATH, using = "//a[contains(text(),'Зарегистрироваться')]")
     private WebElement registrationLink;
 
-    private final By hederLoginPage = By.xpath("//h2[contains(text(),'Вход')]");
-
     @FindBy(how = How.XPATH, using = "//input[@name='name']")
     private WebElement fieldEmail;
 
@@ -34,10 +33,9 @@ public class LoginPage {
     @FindBy(how = How.XPATH, using = "//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa']")
     private WebElement loginButton;
 
-    public LoginPage(){
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
-    }
+    @FindBy(how = How.XPATH, using = "//h2[contains(text(),'Вход')]")
+    private WebElement titlePage;
+
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
@@ -50,20 +48,29 @@ public class LoginPage {
     }
 
     public void assertRedirectLoginPage(){
-        WebElement element = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(hederLoginPage));
-        assertTrue(element.isDisplayed());
+        wait.until(ExpectedConditions.visibilityOf(titlePage));
+        assertTrue(titlePage.isDisplayed());
     }
 
     public void LoginClient(Client client) {
         fieldEmail.sendKeys(client.getEmail());
         fieldPassword.sendKeys(client.getPassword());
-        loginButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginButton);
     }
 
     public void assertSuccessLoginClient(MainPage mainPage) {
         wait.until(ExpectedConditions.visibilityOf(mainPage.headerPage));
         wait.until(ExpectedConditions.visibilityOf(mainPage.buttonSendOrder));
         assertEquals("Оформить заказ", mainPage.buttonSendOrder.getText());
+    }
+
+    public void checkSuccessLogout(){
+        wait.until(ExpectedConditions.visibilityOf(titlePage));
+        String currentURL = driver.getCurrentUrl();
+        Assertions.assertEquals(MainPage.URL+"login", currentURL);
+        assertTrue(fieldEmail.isDisplayed());
+        assertTrue(fieldPassword.isDisplayed());
+
     }
 }
