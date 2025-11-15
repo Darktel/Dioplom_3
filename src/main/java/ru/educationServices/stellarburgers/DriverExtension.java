@@ -32,7 +32,7 @@ public class DriverExtension implements BeforeEachCallback, AfterEachCallback {
     public void afterEach(ExtensionContext context) {
         driverFactory.getDriver().quit();
         apiClient.deleteClient(apiClient.getTokenClient(client));
-        apiClient.deleteClient(apiClient.getTokenClient(brokenClient));
+//        apiClient.deleteClient(apiClient.getTokenClient(brokenClient));
 
     }
 
