@@ -60,6 +60,7 @@ public class MainPage {
     }
 
     public void clickProfileButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(buttonProfileLink));
         buttonProfileLink.click();
     }
 
