@@ -44,15 +44,19 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void ClikRegistrationLink(){
+    @Step("Переход по ссылке регистрации")
+    public void ClickRegistrationLink(){
+        wait.until(ExpectedConditions.elementToBeClickable(registrationLink));
         registrationLink.click();
     }
 
+    @Step("Проверка корректного перенаправления на главную страницу")
     public void assertRedirectLoginPage(){
         wait.until(ExpectedConditions.visibilityOf(titlePage));
         assertTrue(titlePage.isDisplayed());
     }
 
+    @Step("Авторизация пользователя")
     public void LoginClient(Client client) {
         fieldEmail.sendKeys(client.getEmail());
         fieldPassword.sendKeys(client.getPassword());
@@ -60,12 +64,14 @@ public class LoginPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginButton);
     }
 
+    @Step("Проверка корректной авторизации клиента")
     public void assertSuccessLoginClient(MainPage mainPage) {
         wait.until(ExpectedConditions.visibilityOf(mainPage.headerPage));
         wait.until(ExpectedConditions.visibilityOf(mainPage.buttonSendOrder));
         assertEquals("Оформить заказ", mainPage.buttonSendOrder.getText());
     }
 
+    @Step("Проверка корректного выхода из система пользователя")
     public void checkSuccessLogout(){
         wait.until(ExpectedConditions.visibilityOf(titlePage));
         String currentURL = driver.getCurrentUrl();

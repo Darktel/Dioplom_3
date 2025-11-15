@@ -1,5 +1,6 @@
 package ru.educationServices.stellarburgers.pageObject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -67,16 +68,19 @@ public class MainPage {
 
     }
 
+    @Step("Переходим к профилю клиента")
     public void clickProfileButton(){
         wait.until(ExpectedConditions.elementToBeClickable(buttonProfileLink));
         buttonProfileLink.click();
     }
 
+    @Step("Нажимаем кнопку регистрации")
     public void clickLoginButton(){
         wait.until(ExpectedConditions.visibilityOf(buttonSignUpMiddle));
         buttonSignUpMiddle.click();
     }
 
+    @Step("Проверка корректности основных элементов на главной странице")
     public MainPage checkCorrectElementMainPage() {
         wait.until(ExpectedConditions.visibilityOf(mainTitlePage));
         assertTrue(mainTitlePage.isDisplayed());
@@ -87,6 +91,7 @@ public class MainPage {
         return this;
     }
 
+    @Step("Проверка корректного перехода к секции Начинки")
     public MainPage checkNavigationSectionFilling() {
         wait.until(ExpectedConditions.visibilityOf(fillingIngredient2));
         assertTrue(sectionIngredientFillings.isDisplayed());
@@ -94,29 +99,34 @@ public class MainPage {
 
     }
 
+    @Step("Переход к секции Начинки")
     public MainPage clickFillingSection() {
         wait.until(ExpectedConditions.elementToBeClickable(sectionFillings));
         sectionFillings.click();
         return this;
     }
 
+    @Step("Переход к секции Соусы")
     public MainPage clickSaucesSection() {
         wait.until(ExpectedConditions.elementToBeClickable(sectionSauces));
         sectionSauces.click();
         return this;
     }
 
+    @Step("Переход к секции Булки")
     public MainPage clickBunsSection() {
         wait.until(ExpectedConditions.elementToBeClickable(sectionBuns));
         sectionBuns.click();
         return this;
     }
 
+    @Step("Проверка корректного перехода к секции Соусы")
     public void checkNavigationSectionSauces() {
         wait.until(ExpectedConditions.visibilityOf(SaucesIngredient4));
         assertTrue(sectionIngredientSauces.isDisplayed());
     }
 
+    @Step("Проверка корректного перехода к секции Булки")
     public void checkNavigationSectionBuns() {
         wait.until(ExpectedConditions.visibilityOf(BunIngredient2));
         assertTrue(sectionIngredientBuns.isDisplayed());

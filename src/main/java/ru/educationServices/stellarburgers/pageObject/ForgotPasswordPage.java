@@ -1,6 +1,7 @@
 package ru.educationServices.stellarburgers.pageObject;
 
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,7 @@ public class ForgotPasswordPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Нажимаем по ссылке авторизации")
     public void ClickSignInLink(){
         wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         signInLink.click();

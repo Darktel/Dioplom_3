@@ -1,5 +1,6 @@
 package ru.educationServices.stellarburgers.pageObject;
 
+import io.qameta.allure.Step;
 import models.Client;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
@@ -51,6 +52,7 @@ public class AccountPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Проверка корректности отображаемых данных аккаунта")
     public void checkSuccessDataAccount(Client client) {
         wait.until(ExpectedConditions.visibilityOf(profileBar));
         Assertions.assertEquals(client.getName(), fieldName.getAttribute("Value"));
@@ -58,11 +60,13 @@ public class AccountPage {
         wait.until(ExpectedConditions.visibilityOf(fieldPassword));
     }
 
+    @Step("Нажимаем кнопку Выйти из профиля")
     public void ckickButtonExit() {
         wait.until(ExpectedConditions.elementToBeClickable(buttonLogout));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", buttonLogout);
     }
 
+    @Step("Нажимаем на логотип в верхней части сайта")
     public void clickLogo() {
         wait.until(ExpectedConditions.visibilityOf(profileBar)); //Проверяем что мы дождались перехода на страницу Профиля
         wait.until(ExpectedConditions.elementToBeClickable(logo));

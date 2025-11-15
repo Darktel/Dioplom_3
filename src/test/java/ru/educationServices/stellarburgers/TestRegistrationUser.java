@@ -27,7 +27,7 @@ public class TestRegistrationUser {
         RegistrationPage registrationPage = new RegistrationPage(driver);
         driver.get(mainPage.URL);
         mainPage.clickProfileButton();
-        loginPage.ClikRegistrationLink();
+        loginPage.ClickRegistrationLink();
         registrationPage.RegistrationClient(driverExtension.client);
         //Проверка редиректа на страницу логина, после регистрации.
         loginPage.assertRedirectLoginPage();
@@ -45,7 +45,7 @@ public class TestRegistrationUser {
         RegistrationPage registrationPage = new RegistrationPage(driver);
         driver.get(mainPage.URL);
         mainPage.clickLoginButton();
-        loginPage.ClikRegistrationLink();
+        loginPage.ClickRegistrationLink();
         registrationPage.RegistrationClient(driverExtension.brokenClient);
         //Проверка появления сообщения с ошибкой "Неверный пароль".
         registrationPage.AssertDisplayMessage();

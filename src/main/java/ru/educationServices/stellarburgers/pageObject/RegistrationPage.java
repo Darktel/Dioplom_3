@@ -1,5 +1,6 @@
 package ru.educationServices.stellarburgers.pageObject;
 
+import io.qameta.allure.Step;
 import models.Client;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
@@ -38,11 +39,6 @@ public class RegistrationPage {
     private WebElement signInLink;
 
 
-    public RegistrationPage(){
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
-    }
-
     public RegistrationPage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -50,6 +46,7 @@ public class RegistrationPage {
 
     }
 
+    @Step("Заполнение полей и регистрация клиента")
     public void RegistrationClient(Client client){
         inputNameField.sendKeys(client.getName());
         inputEmailField.sendKeys(client.getEmail());
@@ -57,12 +54,14 @@ public class RegistrationPage {
         registrationButton.click();
     }
 
+    @Step("Проверка появления ошибки при не верно введенном пароле")
     public void AssertDisplayMessage(){
         wait.until(ExpectedConditions.visibilityOf(errorMessageWrongPassword));
         // Как только элемент стал видимым, возвращаем его текст
         Assertions.assertEquals("Некорректный пароль", errorMessageWrongPassword.getText());
     }
 
+    @Step("Переход по ссылке авторизации")
     public void clickSignInLink() {
         wait.until(ExpectedConditions.visibilityOf(signInLink));
         signInLink.click();
