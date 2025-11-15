@@ -1,5 +1,6 @@
 package ru.educationServices.stellarburgers.pageObject;
 
+import io.qameta.allure.Step;
 import models.Client;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
