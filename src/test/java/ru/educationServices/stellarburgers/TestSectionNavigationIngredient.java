@@ -35,7 +35,7 @@ public class TestSectionNavigationIngredient {
     }
 
     @Test
-    @DisplayName("Проверка корректности перехода к секции Начинки")
+    @DisplayName("Проверка корректности перехода к секции Булки")
     public void testSectionNavigationBuns(){
         WebDriver driver = driverExtension.getDriver();
         MainPage mainPage = new MainPage(driver);

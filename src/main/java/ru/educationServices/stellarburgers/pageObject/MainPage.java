@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainPage {
     private static WebDriver driver;
@@ -36,11 +36,20 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'Булки')]")
     private WebElement sectionBuns;
 
+    @FindBy(how = How.XPATH, using = "//span[contains(text(),'Булки')]//parent::div")
+    private WebElement divSectionBuns;
+
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'Соусы')]")
     private WebElement sectionSauces;
 
+    @FindBy(how = How.XPATH, using = "//span[contains(text(),'Соусы')]//parent::div")
+    private WebElement divSectionSauces;
+
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'Начинки')]")
     private WebElement sectionFillings;
+
+    @FindBy(how = How.XPATH, using = "//span[contains(text(),'Начинки')]//parent::div")
+    private WebElement divSectionFillings;
 
     @FindBy(how = How.XPATH, using = "//section[@class='BurgerIngredients_ingredients__1N8v2']//ul[1]")
     private WebElement sectionIngredientBuns;
@@ -93,8 +102,15 @@ public class MainPage {
 
     @Step("Проверка корректного перехода к секции Начинки")
     public MainPage checkNavigationSectionFilling() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         wait.until(ExpectedConditions.visibilityOf(fillingIngredient2));
         assertTrue(sectionIngredientFillings.isDisplayed());
+        assertEquals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect",
+                divSectionFillings.getAttribute("class"));
         return this;
 
     }
@@ -121,14 +137,30 @@ public class MainPage {
     }
 
     @Step("Проверка корректного перехода к секции Соусы")
-    public void checkNavigationSectionSauces() {
+    public MainPage checkNavigationSectionSauces() {
         wait.until(ExpectedConditions.visibilityOf(SaucesIngredient4));
         assertTrue(sectionIngredientSauces.isDisplayed());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect",
+                divSectionSauces.getAttribute("class"));
+        return this;
     }
 
     @Step("Проверка корректного перехода к секции Булки")
     public void checkNavigationSectionBuns() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         wait.until(ExpectedConditions.visibilityOf(BunIngredient2));
         assertTrue(sectionIngredientBuns.isDisplayed());
+        assertEquals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect",
+                divSectionBuns.getAttribute("class"));
+
     }
 }
